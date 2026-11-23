@@ -1,0 +1,24 @@
+[Container]
+ContainerName=%i-wp-db
+Image=docker.io/mariadb:10
+AutoUpdate=registry
+UserNS=auto
+NoNewPrivileges=true
+ReadOnly=true
+Volume=wp-db@.volume:/var/lib/mysql:Z,idmap
+Volume=wp-sock@.volume:/run/mysqld:z,idmap
+Secret=%i-db,type=env,target=MARIADB_DATABASE
+Secret=%i-dbu,type=env,target=MARIADB_USER
+Secret=%i-dbp,type=env,target=MARIADB_PASSWORD
+Environment=MARIADB_RANDOM_ROOT_PASSWORD=1
+Environment=MARIADB_AUTO_UPGRADE=1
+Environment=MARIADB_DISABLE_UPGRADE_BACKUP=1
+
+[Service]
+MemoryHigh=256M
+MemoryMax=384M
+CPUQuota=100%
+Restart=on-failure
+ExecStartPre=/usr/bin/sh -c 'openssl rand -hex 6 | tr -d "\n" | podman secret create --ignore %i-db -'
+ExecStartPre=/usr/bin/sh -c 'openssl rand -hex 6 | tr -d "\n" | podman secret create --ignore %i-dbu -'
+ExecStartPre=/usr/bin/sh -c 'openssl rand -hex 16 | tr -d "\n" | podman secret create --ignore %i-dbp -'

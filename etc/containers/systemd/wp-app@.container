@@ -1,0 +1,42 @@
+[Unit]
+Requires=wp-db@.container
+After=wp-db@.container
+PropagatesStopTo=wp-app@.volume wp-db@.container wp-db@.volume wp-sock@.volume
+
+[Container]
+ContainerName=%i-wp-app
+Image=docker.io/wordpress:php8.3-fpm
+AutoUpdate=registry
+UserNS=auto
+NoNewPrivileges=true
+ReadOnly=true
+Network=caddy.network
+Volume=wp-app@.volume:/var/www/html:z,idmap
+Volume=wp-sock@.volume:/run/mysqld:z,ro,idmap
+Environment=WORDPRESS_DB_HOST=localhost:/run/mysqld/mysqld.sock
+Secret=%i-db,type=env,target=WORDPRESS_DB_NAME
+Secret=%i-dbu,type=env,target=WORDPRESS_DB_USER
+Secret=%i-dbp,type=env,target=WORDPRESS_DB_PASSWORD
+Environment=WORDPRESS_CONFIG_EXTRA="define( 'WP_HOME', 'https://%i' ); \
+	define( 'WP_SITEURL', 'https://%i'  ); \
+	define( 'WP_MEMORY_LIMIT', '128M'  ); \
+	define( 'WP_POST_REVISIONS', 10 ); \
+	define( 'DISABLE_WP_CRON', true ); \
+	define( 'WP_AUTO_UPDATE_CORE', 'minor' ); \
+	define( 'DISALLOW_FILE_EDIT', true );"
+
+[Service]
+MemoryHigh=512M
+MemoryMax=576M
+CPUQuota=100%
+Restart=on-failure
+#ProtectSystem=true
+#ProtectHome=true
+#DevicePolicy=closed
+#ProtectKernelTunables=true
+#ProtectKernelModules=true
+#ProtectKernelLogs=true
+#ProtectClock=true
+
+[Install]
+WantedBy=multi-user.target default.target

@@ -1,0 +1,11 @@
+[Container]
+Image=docker.io/privatebin/fs:stable
+AutoUpdate=registry
+UserNS=auto
+Network=caddy.network
+Volume=pvbin.ashutoshmishra.org.volume:/srv/data:Z,idmap
+NoNewPrivileges=true
+ReadOnly=true
+
+[Install]
+WantedBy=multi-user.target

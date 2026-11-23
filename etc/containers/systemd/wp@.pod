@@ -1,0 +1,10 @@
+[Pod]
+PodName=%i-wp
+UserNS=auto:size=65536
+Volume=wp-sock@.volume:/run/mysqld:Z
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target default.target

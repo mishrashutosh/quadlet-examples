@@ -1,0 +1,25 @@
+[Container]
+Image=docker.io/caddy:2
+AutoUpdate=registry
+Network=caddy.network
+AddCapability=CAP_NET_ADMIN
+NoNewPrivileges=true
+ReadOnly=true
+PublishPort=80:80/tcp
+PublishPort=[::]:80:80/tcp
+PublishPort=443:443/tcp
+PublishPort=[::]:443:443/tcp
+PublishPort=443:443/udp
+PublishPort=[::]:443:443/udp
+Environment=GOMEMLIMIT=784MiB
+Volume=caddy-data.volume:/data:Z
+Volume=caddy-config.volume:/config:Z
+Volume=/etc/caddy:/etc/caddy:Z
+Volume=/var/lib/containers/storage/volumes:/srv:z,ro
+
+[Service]
+Restart=on-failure
+ExecStartPost=/usr/bin/sh -c 'podman exec systemd-caddy caddy fmt -w /etc/caddy/Caddyfile'
+
+[Install]
+WantedBy=multi-user.target

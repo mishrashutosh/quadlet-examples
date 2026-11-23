@@ -1,0 +1,12 @@
+[Container]
+Image=docker.io/freshrss/freshrss:latest
+UserNS=auto
+NoNewPrivileges=true
+ReadOnly=true
+AutoUpdate=registry
+Network=caddy.network
+Environment=CRON_MIN=10,40
+Volume=freshrss@.volume:/var/www/FreshRSS/data:Z,idmap
+
+[Install]
+WantedBy=multi-user.target
