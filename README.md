@@ -1,12 +1,12 @@
-This repo contains some example quadlet files to host web apps like WordPress and others via rootful Podman.
+This repo contains example quadlet files to host web apps like WordPress and FreshRSS via rootful Podman.
 
-Quadlet files are located at `/etc/containers/systemd` in a flat structure. You can organize them in directories.
+Quadlet files are located at `/etc/containers/systemd`.
 
 I use Caddy as the reverse proxy and web server. Example Caddyfile is at `/etc/caddy/Caddyfile`.
 
-Podman works best on RedHat-aligned Linux distros (Alma, Rocky, RHEL, CentOS Stream, Fedora, etc), but it'll run just fine on openSUSE MicroOS, Debian, Ubuntu, Arch, etc. Podman 5.5+ is required for some quadlet features used in these examples.
+Podman works best on RedHat-aligned Linux distros (Alma, Rocky, RHEL, CentOS Stream, Fedora, etc), but it'll run just fine on openSUSE, Debian, Ubuntu, Arch, etc. SELinux mount labels (Z,z) will be ignored on systems not running SELinux. Podman 5.5+ is required for some quadlet features used in these examples.
 
-Refer the official documentation for Podman quadlets: https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
+Official documentation for Podman quadlets: https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
 
 #### Notes
 
