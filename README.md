@@ -4,7 +4,7 @@ Quadlet files are located at `/etc/containers/systemd` in a flat structure. You 
 
 I use Caddy as the reverse proxy and web server. Example Caddyfile is at `/etc/caddy/Caddyfile`.
 
-Podman works best on RedHat-aligned Linux distros, but it'll run just fine on openSUSE MicroOS, Debian, Ubuntu, Arch, etc. Podman 5.5+ is required for some quadlet features used in these examples.
+Podman works best on RedHat-aligned Linux distros (Alma, Rocky, RHEL, CentOS Stream, Fedora, etc), but it'll run just fine on openSUSE MicroOS, Debian, Ubuntu, Arch, etc. Podman 5.5+ is required for some quadlet features used in these examples.
 
 Refer the official documentation for Podman quadlets: https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
 
